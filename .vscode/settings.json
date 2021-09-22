@@ -1,0 +1,25 @@
+{
+    "css.validate": false,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true
+    },
+    "editor.rulers": [
+      140
+    ],
+    "editor.tabSize": 2,
+    "eslint.workingDirectories": [
+      {
+        "mode": "auto"
+      }
+    ],
+    "files.eol": "\n",
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
+    "scss.validate": false,
+    "typescript.locale": "en",
+    "vetur.validation.template": false,
+    "vetur.validation.script": false,
+    "vetur.format.defaultFormatter.html": "prettier",
+  }
+  
