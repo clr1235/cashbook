@@ -3,6 +3,7 @@ import { Application } from 'egg';
 export default (app: Application) => {
   const { controller, router } = app;
 
-  router.get('/', controller.home.index);
-  router.post('/user', controller.user.register);
+  // 抛出接口，给前端调用
+  router.post('/api/user/register', controller.user.register);
+  router.post('/api/user/login', controller.user.login);
 };
