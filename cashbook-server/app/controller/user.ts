@@ -87,4 +87,17 @@ export default class UserController extends Controller {
       },
     };
   }
+  // test
+  public async test() {
+    const { ctx, app } = this;
+    const token = ctx.request.header.authorization as string;
+    const decode = await app.jwt.verify(token, app.config.jwt.secret);
+    ctx.body = {
+      code: 200,
+      message: '获取成功',
+      data: {
+        ...decode as any,
+      },
+    };
+  }
 }

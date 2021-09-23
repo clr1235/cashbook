@@ -44,7 +44,7 @@ export default (appInfo: EggAppInfo) => {
   };
   // 定义token加密条件字符串
   config.jwt = {
-    secret: 'username',
+    secret: 'abc',
   };
   // add your special config in here
   const bizConfig = {
