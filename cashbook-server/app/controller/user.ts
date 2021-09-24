@@ -100,4 +100,25 @@ export default class UserController extends Controller {
       },
     };
   }
+  // 获取用户信息
+  public async getUserInfo() {
+    const { ctx, app } = this;
+    const token = ctx.request.header.authorization as string;
+    // 解析出token中包含的信息
+    const decode = await app.jwt.verify(token, app.config.jwt.secret) as any;
+    // 根据username去数据库取数据
+    const userInfo = await ctx.service.user.getUserByName(decode.username);
+    // 将从数据库拿到的信息处理之后返回
+    ctx.body = {
+      code: 200,
+      msg: '请求成功',
+      data: {
+        id: userInfo.id,
+        username: userInfo.username,
+        signature: userInfo.signature || '',
+        avatar: userInfo.avatar,
+      },
+    };
+
+  }
 }

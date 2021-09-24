@@ -6,5 +6,6 @@ export default (app: Application) => {
   // 抛出接口，给前端调用
   router.post('/api/user/register', controller.user.register);
   router.post('/api/user/login', controller.user.login);
+  router.get('/api/user/getUserInfo', _jwt, controller.user.getUserInfo);
   router.get('/api/user/test', _jwt, controller.user.test);
 };
