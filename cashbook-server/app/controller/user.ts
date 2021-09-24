@@ -121,4 +121,30 @@ export default class UserController extends Controller {
     };
 
   }
+  // 修改用户信息
+  public async editUserInfo() {
+    const { ctx, app } = this;
+    const { signature = '' } = ctx.request.body;
+    try {
+      const token = ctx.request.header.authorization as string;
+      // 解析出token中包含的信息
+      const decode = await app.jwt.verify(token, app.config.jwt.secret) as any;
+      const userInfo = await ctx.service.user.getUserByName(decode.username);
+      await ctx.service.user.editUserInfo({
+        ...userInfo,
+        signature,
+      });
+      ctx.body = {
+        code: 200,
+        msg: '请求成功',
+        data: {
+          ...userInfo,
+          signature,
+        },
+      };
+    } catch (error) {
+      console.log(error, '修改用户信息抛错');
+    }
+
+  }
 }
