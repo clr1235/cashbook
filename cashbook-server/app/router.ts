@@ -8,6 +8,11 @@ export default (app: Application) => {
   router.post('/api/user/login', controller.user.login);
   router.get('/api/user/getUserInfo', _jwt, controller.user.getUserInfo);
   router.get('/api/user/editUserInfo', _jwt, controller.user.editUserInfo);
+  // 上传接口
   router.post('/api/upload', controller.upload.upload);
+  // 账单相关接口
+  router.post('/api/bill/add', _jwt, controller.bill.add);
+  router.post('/api/bill/list', _jwt, controller.bill.list);
+  // 测试接口
   router.get('/api/user/test', _jwt, controller.user.test);
 };
