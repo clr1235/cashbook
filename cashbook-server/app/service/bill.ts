@@ -22,8 +22,8 @@ export default class Bill extends Service {
       const result = await app.mysql.select('bill', { // 搜索bill表
         where: { user_id: params.user_id }, // where条件
         columns: [ 'id', 'pay_type', 'amount', 'date', 'type_id', 'type_name', 'remark' ], // 要查询的表字段
-        orders: [[ 'date' ]], // 排序方式
-        limit: params.page_size, // 返回数据量
+        orders: [[ 'date', 'desc' ]], // 排序方式
+        limit: +params.page_size, // 返回数据量
         offset: params.page - 1, // 数据偏移量
       });
       return {
