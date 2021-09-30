@@ -81,6 +81,8 @@ export default class BillController extends Controller {
             };
           }),
           total,
+          page_size: +page_size,
+          page: +page,
         },
       };
     } catch (error) {
