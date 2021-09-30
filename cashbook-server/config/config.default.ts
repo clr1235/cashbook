@@ -46,9 +46,22 @@ export default (appInfo: EggAppInfo) => {
   config.jwt = {
     secret: 'abc',
   };
+  // 文件上传模式
+  config.multipart = {
+    mode: 'file',
+  };
+  // 跨域配置
+  config.cors = {
+    // 允许所有跨域访问
+    origin: '*',
+    // 允许cookie跨越
+    credentials: true,
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
+  };
   // add your special config in here
   const bizConfig = {
     sourceUrl: `https://github.com/eggjs/examples/tree/master/${appInfo.name}`,
+    uploadDir: 'app/public/upload',
   };
 
   // the return config will combines to EggAppConfig

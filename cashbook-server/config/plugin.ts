@@ -10,9 +10,15 @@ const plugin: EggPlugin = {
     enable: true,
     package: 'egg-mysql',
   },
+  // 鉴权插件
   jwt: {
     enable: true,
     package: 'egg-jwt',
+  },
+  // 跨域插件
+  cors: {
+    enable: true,
+    package: 'egg-cors',
   },
 };
 

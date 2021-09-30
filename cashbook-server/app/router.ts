@@ -8,5 +8,6 @@ export default (app: Application) => {
   router.post('/api/user/login', controller.user.login);
   router.get('/api/user/getUserInfo', _jwt, controller.user.getUserInfo);
   router.get('/api/user/editUserInfo', _jwt, controller.user.editUserInfo);
+  router.post('/api/upload', controller.upload.upload);
   router.get('/api/user/test', _jwt, controller.user.test);
 };
