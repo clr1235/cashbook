@@ -93,4 +93,43 @@ export default class BillController extends Controller {
       };
     }
   }
+
+  // 获取账单详情
+  public async detail() {
+    const { ctx, app } = this;
+    const { id = '' } = ctx.request.query;
+    const token = ctx.request.header.authorization as string;
+    const decode = await app.jwt.verify(token, app.config.jwt.secret) as any;
+    if (!decode) {
+      return;
+    }
+    const user_id = decode.id;
+    // 判断是否传入账单 id
+    if (!id) {
+      ctx.body = {
+        code: 500,
+        msg: '订单id不能为空',
+        data: null,
+      };
+      return;
+    }
+    try {
+      const detail = await ctx.service.bill.detail(id, user_id);
+      if (detail.date) {
+        detail.date = dayjs(detail.date).format('YYYY-MM-DD HH:mm:ss');
+      }
+      ctx.body = {
+        code: 200,
+        msg: '请求成功',
+        data: detail,
+      };
+    } catch (error) {
+      console.log(error, '账单详情接口报错');
+      ctx.body = {
+        code: 500,
+        msg: '系统错误',
+        data: null,
+      };
+    }
+  }
 }

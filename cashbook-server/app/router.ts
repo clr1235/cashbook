@@ -13,6 +13,7 @@ export default (app: Application) => {
   // 账单相关接口
   router.post('/api/bill/add', _jwt, controller.bill.add);
   router.post('/api/bill/list', _jwt, controller.bill.list);
+  router.get('/api/bill/detail', _jwt, controller.bill.detail);
   // 测试接口
   router.get('/api/user/test', _jwt, controller.user.test);
 };

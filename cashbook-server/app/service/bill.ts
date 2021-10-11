@@ -35,4 +35,15 @@ export default class Bill extends Service {
       return null;
     }
   }
+  // 获取指定user_id下的账单详情
+  public async detail(id, user_id) {
+    const { app } = this;
+    try {
+      const res = await app.mysql.get('bill', { id, user_id });
+      return res;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
 }
