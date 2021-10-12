@@ -46,4 +46,15 @@ export default class Bill extends Service {
       return null;
     }
   }
+  // 编辑账单
+  public async update(params) {
+    const { app } = this;
+    try {
+      const res = await app.mysql.update('bill', params);
+      return res;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
 }
