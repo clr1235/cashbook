@@ -183,4 +183,41 @@ export default class BillController extends Controller {
       };
     }
   }
+
+  // 删除账单
+  public async delete() {
+    const { ctx, app } = this;
+    const token = ctx.request.header.authorization as string;
+    const decode = await app.jwt.verify(token, app.config.jwt.secret) as any;
+    if (!decode) return;
+    const user_id = decode.id;
+    const { id } = ctx.request.body;
+    // 判断账单是否存在
+    const detail = await ctx.service.bill.detail(id, user_id);
+    if (!detail) {
+      ctx.body = {
+        code: 500,
+        msg: '账单不存在',
+        data: null,
+      };
+      return;
+    }
+
+    try {
+      await ctx.service.bill.delete(detail);
+      ctx.body = {
+        code: 200,
+        msg: '请求成功',
+        data: null,
+      };
+    } catch (error) {
+      console.log(error);
+      ctx.body = {
+        code: 500,
+        msg: '系统错误',
+        data: null,
+      };
+    }
+
+  }
 }

@@ -15,6 +15,7 @@ export default (app: Application) => {
   router.post('/api/bill/list', _jwt, controller.bill.list);
   router.get('/api/bill/detail', _jwt, controller.bill.detail);
   router.post('/api/bill/update', _jwt, controller.bill.update);
+  router.post('/api/bill/delete', _jwt, controller.bill.delete);
   // 测试接口
   router.get('/api/user/test', _jwt, controller.user.test);
 };
