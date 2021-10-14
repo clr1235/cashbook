@@ -149,6 +149,16 @@ export default class BillController extends Controller {
     const decode = await app.jwt.verify(token, app.config.jwt.secret) as any;
     if (!decode) return;
     const user_id = decode.id;
+    // 判断账单是否存在
+    const detail = await ctx.service.bill.detail(id, user_id);
+    if (!detail) {
+      ctx.body = {
+        code: 500,
+        msg: '账单不存在',
+        data: null,
+      };
+      return;
+    }
     try {
       await ctx.service.bill.update({
         id,
