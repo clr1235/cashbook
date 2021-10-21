@@ -1,5 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import path from 'path'
+import postcssPxtorem from 'postcss-pxtorem'
 // ui组件的按需加载
 import styleImport from 'vite-plugin-style-import'
 
@@ -16,6 +18,16 @@ export default defineConfig({
         modifyVars:{},
         javascriptEnabled: true
       }
+    },
+    // 配置postcss
+    postcss: {
+      "plugins": [
+        postcssPxtorem({
+          rootValue: 37.5,
+          propList: ['*'],
+          selectorBlackList: ['.norem'] // 过滤掉.norem-开头的class，不进行rem转换
+        })
+      ]
     }
   },
   plugins: [
@@ -31,8 +43,8 @@ export default defineConfig({
       ]
     })
   ],
-  // 配置代理
   server: {
+    // 配置代理
     proxy: {
       '/api': {
         // 当遇到 /api 路径时，将其转换成 target 的值
@@ -40,6 +52,14 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: path => path.replace(/^\/api/, '') // 将 /api 重写为空
       }
+    },
+  },
+  resolve: {
+    // 配置别名
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+      '@api': path.resolve(__dirname, 'src/api'),
     }
-  }
+  },
+
 })

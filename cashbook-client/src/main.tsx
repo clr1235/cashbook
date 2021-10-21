@@ -4,7 +4,7 @@ import 'lib-flexible/flexible'
 
 import App from './App'
 
-import './index.css'
+import './index.less'
 
 ReactDOM.render(
   <React.StrictMode>

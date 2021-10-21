@@ -7,7 +7,7 @@ import {
 
 import routes from './router'
 
-import './App.css'
+import './App.less'
 
 function App() {
   const [count, setCount] = useState(0)
