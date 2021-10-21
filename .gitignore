@@ -1,6 +1,8 @@
 logs/
 npm-debug.log
 node_modules/
+cashbook-client/node_modules/
+cashbook-server/node_modules/
 coverage/
 .idea/
 run/
@@ -11,10 +13,3 @@ logs/
 *.lock
 *.js
 !.autod.conf.js
-
-app/**/*.js
-test/**/*.js
-config/**/*.js
-app/**/*.map
-test/**/*.map
-config/**/*.map
