@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import {
-  BrowserRouter as Router,
   Switch,
   Route
 } from "react-router-dom"
-
+import {ConfigProvider} from 'zarm'
 import routes from './router'
+
 
 import './App.less'
 
@@ -13,19 +13,19 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <div className="app">
-      <Router>
+    <ConfigProvider primaryColor="#1890ff">
+      <div className="app">
         <Switch>
-          {
-            routes.map(route => (
-              <Route exact key={route.path} path={route.path}>
-                <route.component />
-              </Route>)
-            )
-          }
-        </Switch>
-      </Router>
-    </div>
+            {
+              routes.map(route => (
+                <Route exact key={route.path} path={route.path}>
+                  <route.component />
+                </Route>)
+              )
+            }
+          </Switch>
+      </div>
+    </ConfigProvider>
   )
 }
 
