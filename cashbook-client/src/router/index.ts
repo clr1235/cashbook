@@ -1,12 +1,19 @@
-import Home from '../pages/home'
-import About from '../pages/about'
+import Amount from '../pages/Amount/index'
+import Statistics from '../pages/Statistics/index'
+import User from '../pages/User/index'
 
 const routes = [{
   path: '/',
-  component: Home
+  key: 'amount',
+  component: Amount
 }, {
-  path: '/about',
-  component: About
+  path: '/statistics',
+  key: 'statistics',
+  component: Statistics
+}, {
+  path: '/user',
+  key: 'user',
+  component: User
 }]
 
 export default routes
