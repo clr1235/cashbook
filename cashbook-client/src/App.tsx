@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import {
   Switch,
   Route,
-  useHistory,
   useLocation,
 } from "react-router-dom"
 import routes from './router'

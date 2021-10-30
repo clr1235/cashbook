@@ -1,36 +1,23 @@
 import { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
-import { Input, Button, Tabs, Toast } from 'antd-mobile'
+import { Input, Button, Tabs, Form, Toast } from 'antd-mobile'
 import Captcha from 'react-captcha-code';
 import styles from './index.module.less'
 
-
-const { Panel } = Tabs;
-
+const {Item} = Form
 const Login = () => {
+  const [form] = Form.useForm()
   const [state, setState] = useState({
-    mode: 0, // 0: 登录，1: 注册
+    mode: 'login',
     acount: '', // 账号
     password: '', // 密码
     captcha: '', // 验证码
   })
-  // 表单校验所需方法
-  const {
-    handleSubmit,
-    control,
-    getValues,
-    formState: { errors },
-  } = useForm({
-    mode: "all",
-    defaultValues: state,
-    reValidateMode: "onChange",
-  });
 
   // 改变模式
-  const onChangeMode = (index?: number) => {
+  const onChangeMode = (key?: string) => {
     setState({
       ...state,
-      mode: index as number
+      mode: key as string
     })
   }
 
@@ -43,85 +30,69 @@ const Login = () => {
   }
 
   // 提交
-  const onSubmit = async (data?: any) => {
-    console.log(data, 'datat-=-=-=');
+  const onFinish = async () => {
+    const values = form.getFieldsValue()
+    console.log(values, 'datat-=-=-=');
+    if (!values.acount) {
+      return Toast.show({
+        content: '请输入账号',
+        position: 'top',
+      })
+    }
+    if (!values.password) {
+      return Toast.show({
+        content: '请输入密码',
+        position: 'top',
+      })
+    }
+    if (!values.captcha) {
+      return Toast.show({
+        content: '请输入验证码',
+        position: 'top',
+      })
+    }
   }
 
   return (
     <div className={styles.login_page}>
-      <form className={styles.form_box}>
-        <Tabs value={state.mode} onChange={onChangeMode}>
-          <Panel title="登录">
+      <Form className={styles.form_box} form={form} onClick={onFinish} layout='horizontal'
+          footer={
+            <Button block color="primary" type="submit">
+              {state.mode === 'login' ? "登录" : "注册"}
+            </Button>
+          }>
+        <Tabs activeKey={state.mode} onChange={onChangeMode}>
+          <Tabs.TabPane title="登录" key="login">
             <div className={styles.box}>
-              <div className={styles.form_item}>
-                <i className="iconfont icon-phone"></i>
-                <Controller
-                  control={control}
-                  name="acount"
-                  rules={{
-                    required: "请输入账号",
-                  }}
-                  render={({ field }) => (
-                    <Input
-                      type="acount"
-                      {...field}
-                      placeholder="请输入账号"
-                      clearable={true}
-                    ></Input>
-                  )}
-                ></Controller>
-              </div>
-              <div className={styles.form_item}>
-                <i className="iconfont icon-mima"></i>
-                <Controller
-                  control={control}
-                  name="password"
-                  rules={{
-                    required: "请输入密码",
-                  }}
-                  render={({ field }) => (
-                    <Input
-                      type="password"
-                      {...field}
-                      placeholder="请输入密码"
-                      clearable={true}
-                    ></Input>
-                  )}
-                ></Controller>
-              </div>
-              <div className={styles.form_item}>
-                <i className="iconfont icon-mima"></i>
-                <Controller
-                  control={control}
-                  name="captcha"
-                  rules={{
-                    required: "请输入验证码",
-                  }}
-                  render={({ field }) => (
-                    <Input
-                      type="captcha"
-                      {...field}
-                      placeholder="请输入验证码"
-                      clearable={true}
-                    ></Input>
-                  )}
-                ></Controller>
-                <Captcha charNum={4} className={styles.captcha} onChange={handleChangeCaptcha}></Captcha>
-              </div>
+              <Item name="acount" label="账号" rules={[{ required: true, message: ' ' }]}>
+                <Input
+                  placeholder="请输入账号"
+                  clearable
+                ></Input>
+              </Item>
+              <Item name="password" label="密码" rules={[{ required: true, message: ' ' }]}>
+                <Input
+                  placeholder="请输入密码"
+                  clearable
+                  type='password'
+                ></Input>
+              </Item>
+              <Item className={styles.captcha} name="captcha" label="验证码" rules={[{ required: true, message: ' ' }]}>
+                <div className={styles.form_item}>
+                  <Input
+                    placeholder="请输入验证码"
+                    clearable
+                  ></Input>
+                  <Captcha charNum={4} className={styles.captcha} onChange={handleChangeCaptcha}></Captcha>
+                </div>
+              </Item>
             </div>
-          </Panel>
-          <Panel title="注册">
+          </Tabs.TabPane>
+          <Tabs.TabPane title="注册" key="register">
             <div className="content">可是可是可是上课</div>
-          </Panel>
+          </Tabs.TabPane>
         </Tabs>
-        <div className={styles.btn_box}>
-          <Button block theme="primary" onClick={handleSubmit((data) => {
-            onSubmit(data);
-          })}>
-            {state.mode === 0 ? "登录" : "注册"}
-          </Button>
-        </div>
-      </form>
+      </Form>
     </div>
   )
 }
