@@ -1,3 +1,5 @@
-export default {
+import LoginPageApi from "./login";
 
+export default {
+  LoginPageApi
 }

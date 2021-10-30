@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { Input, Button, Tabs, Form, Toast } from 'antd-mobile'
 import Captcha from 'react-captcha-code';
+
+import Api from '../../api/index'
+
 import styles from './index.module.less'
 
 const {Item} = Form
@@ -31,7 +34,7 @@ const Login = () => {
   // 提交
   const onFinish = async () => {
     const values = form.getFieldsValue()
-    console.log(values, 'datat-=-=-=');
+    // 校验
     if (!values.acount) {
       return Toast.show({
         content: '请输入账号',
@@ -57,7 +60,22 @@ const Login = () => {
       })
     }
     setLoading(true)
+    // 接口调用
+    if (state.mode === 'register') {
+      const fetchData = {
+        username: values.acount,
+        password: values.password
+      }
+      try {
+        const res:any = await Api.LoginPageApi.register(fetchData)
+        Toast.show({content: res.msg})
+      } catch {
 
+      } finally {
+        setLoading(false)
+      }
+
+    }
   }
 
   // formItems

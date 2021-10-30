@@ -1,6 +1,5 @@
 import axios from "axios";
 import {Toast} from 'antd-mobile'
-import { UploadOutline } from 'antd-mobile-icons'
 export function handledGetParams(params: any) {
   let arr = [] as any;
   if (Object.prototype.toString.call(params) !== "[object Object]") {

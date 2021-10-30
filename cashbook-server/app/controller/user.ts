@@ -34,6 +34,7 @@ export default class UserController extends Controller {
       password,
       signature: 'peace && love',
       avatar: defaultAvatar,
+      is_delete: 0,
     });
     if (res) {
       ctx.body = {
