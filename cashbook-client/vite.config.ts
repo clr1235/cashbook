@@ -32,16 +32,14 @@ export default defineConfig({
   },
   plugins: [
     react(),
-    // 按需加载配置
-    styleImport({
-      libs:[
-        {
-          libraryName: 'zarm',
-          esModule: true,
-          resolveStyle: name => `zarm/es/${name}/style/css`
-        }
-      ]
-    })
+    // 按需加载配置  antd-mobile的按需引入放在.bablerc文件中进行配置
+    // styleImport({
+    //   libs: [{
+    //     libraryName: 'zarm',
+    //     esModule: true,
+    //     resolveStyle: (name) => name => `zarm/es/${name}/style/css`,
+    //   }]
+    // })
   ],
   server: {
     // 配置代理

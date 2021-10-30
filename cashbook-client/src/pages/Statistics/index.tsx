@@ -1,7 +1,7 @@
-import { Button } from 'zarm';
+import { Button } from 'antd-mobile';
 function Statistics() {
   return (
-    <div><Button theme="primary">Statistics</Button></div>
+    <div><Button>Statistics</Button></div>
   )
 }
 

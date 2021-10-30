@@ -1,0 +1,51 @@
+.login_page {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('../../assets/img/login_bg_3.jpeg') no-repeat fixed center;
+  color: #fff;
+  padding-top: 40%;
+  :global {
+    .iconfont {
+      font-size: 20px;
+      margin-right: 10px;
+    }
+    .za-tabs__tab {
+      color: #fff;
+    }
+    .za-input {
+      border-bottom: 1px solid #ccc;
+    }
+    .za-input input {
+      color: #fff;
+      font-size: 16px;
+      &::-webkit-input-placeholder {
+        color: #fff;
+        font-size: 16px;
+      }
+    }
+  }
+  .form_box {
+    .box {
+      padding: 40px 20px;
+    }
+    .form_item {
+      display: flex;
+      justify-content: flex-start;
+      align-items: end;
+      flex-wrap: nowrap;
+      padding: 20px 0;
+      .captcha {
+        margin-left: 10px;
+      }
+    }
+    .btn_box {
+      padding: 80px 20px 20px 20px;
+    }
+  }
+
+}

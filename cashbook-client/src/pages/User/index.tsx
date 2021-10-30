@@ -1,7 +1,7 @@
-import { Button } from 'zarm';
+import { Button } from 'antd-mobile';
 function User() {
   return (
-    <div><Button theme="primary">user</Button></div>
+    <div><Button >user</Button></div>
   )
 }
 

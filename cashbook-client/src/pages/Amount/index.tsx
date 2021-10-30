@@ -1,6 +1,9 @@
+import {Button} from 'antd-mobile'
 function Amount() {
   return (
-    <div>Amount</div>
+    <div>
+      <Button color="primary">账单页面</Button>
+    </div>
   )
 }
 

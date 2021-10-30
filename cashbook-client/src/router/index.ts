@@ -1,9 +1,10 @@
 import Amount from '../pages/Amount/index'
 import Statistics from '../pages/Statistics/index'
 import User from '../pages/User/index'
+import Login from '../pages/Login/index'
 
 const routes = [{
-  path: '/',
+  path: '/amount',
   key: 'amount',
   component: Amount
 }, {
@@ -14,6 +15,10 @@ const routes = [{
   path: '/user',
   key: 'user',
   component: User
+}, {
+  path: '/login',
+  key: 'login',
+  component: Login
 }]
 
 export default routes
