@@ -82,7 +82,7 @@ export default class UserController extends Controller {
     }, app.config.jwt.secret);
     ctx.body = {
       code: 200,
-      message: '登录成功',
+      msg: '登录成功',
       data: {
         token,
       },
@@ -95,7 +95,7 @@ export default class UserController extends Controller {
     const decode = await app.jwt.verify(token, app.config.jwt.secret);
     ctx.body = {
       code: 200,
-      message: '获取成功',
+      msg: '获取成功',
       data: {
         ...decode as any,
       },

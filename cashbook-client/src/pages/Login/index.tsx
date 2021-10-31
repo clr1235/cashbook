@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Input, Button, Tabs, Form, Toast } from 'antd-mobile'
 import Captcha from 'react-captcha-code';
+import {useHistory} from 'react-router-dom'
 
 import Api from '../../api/index'
 
@@ -8,6 +9,7 @@ import styles from './index.module.less'
 
 const {Item} = Form
 const Login = () => {
+  const history = useHistory()
   const [form] = Form.useForm()
   const [captchaTmp, setCaptchaTmp] = useState('')
   const [loading, setLoading] = useState(false)
@@ -32,7 +34,7 @@ const Login = () => {
   }
 
   // 提交
-  const onFinish = async () => {
+  let onFinish = async () => {
     const values = form.getFieldsValue()
     // 校验
     if (!values.acount) {
@@ -69,52 +71,71 @@ const Login = () => {
       try {
         const res:any = await Api.LoginPageApi.register(fetchData)
         Toast.show({content: res.msg})
-      } catch {
-
       } finally {
         setLoading(false)
       }
 
+    } else if (state.mode === 'login') {
+      const fetchData = {
+        username: values.acount,
+        password: values.password
+      }
+      try {
+        const res:any = await Api.LoginPageApi.login(fetchData)
+        console.log(res, 'res0-0-0-')
+        Toast.show({content: res.msg})
+        history.push('/amount')
+        console.log(33333)
+      } finally {
+        setLoading(false)
+      }
     }
   }
 
   // formItems
-  const renderFormItems = () => {
-    return <div className={styles.box}>
-    <Item name="acount" label="账号" rules={[{ required: true, message: ' ' }]}>
-      <Input
-        placeholder="请输入账号"
-        clearable
-      ></Input>
-    </Item>
-    <Item name="password" label="密码" rules={[{ required: true, message: ' ' }]}>
-      <Input
-        placeholder="请输入密码"
-        clearable
-        type='password'
-      ></Input>
-    </Item>
-    <Item className={styles.captcha} name="captcha" label="验证码" rules={[{ required: true, message: ' ' }]}>
-      <div className={styles.form_item}>
-        <Input
-          placeholder="请输入验证码"
-          clearable
-        ></Input>
-        <Captcha charNum={4} className={styles.captcha} onChange={handleChangeCaptcha}></Captcha>
+  const renderFormItems = useCallback(() => {
+    return (
+      <div className={styles.box}>
+        <Item name="acount" label="账号" rules={[{ required: true, message: ' ' }]}>
+          <Input
+            placeholder="请输入账号"
+            clearable
+          ></Input>
+        </Item>
+        <Item name="password" label="密码" rules={[{ required: true, message: ' ' }]}>
+          <Input
+            placeholder="请输入密码"
+            clearable
+            type='password'
+          ></Input>
+        </Item>
+        <Item className={styles.captcha} name="captcha" label="验证码" rules={[{ required: true, message: ' ' }]}>
+          <div className={styles.form_item}>
+            <Input
+              placeholder="请输入验证码"
+              clearable
+            ></Input>
+            <Captcha charNum={4} className={styles.captcha} onChange={handleChangeCaptcha}></Captcha>
+          </div>
+        </Item>
       </div>
-    </Item>
-  </div>
-  }
+    )
+  }, [])
 
+  useEffect(() => {
+    return () => {
+      onFinish = () => {}
+    }
+  })
   return (
     <div className={styles.login_page}>
-      <Form className={styles.form_box} form={form} onClick={onFinish} layout='horizontal'
+      <Form className={styles.form_box} form={form} layout='horizontal'
           footer={
-            <Button block color="primary" type="submit" loading={loading}>
+            <Button block color="primary" onClick={onFinish} loading={loading}>
               {state.mode === 'login' ? "登录" : "注册"}
             </Button>
           }>
-        <Tabs activeKey={state.mode} onChange={onChangeMode}>
+        <Tabs activeKey={state.mode} onChange={() => {onChangeMode()}}>
           <Tabs.TabPane title="登录" key="login">
             {renderFormItems()}
           </Tabs.TabPane>
