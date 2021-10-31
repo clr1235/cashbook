@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { Input, Button, Tabs, Form, Toast } from 'antd-mobile'
 import Captcha from 'react-captcha-code';
 import {useHistory} from 'react-router-dom'
@@ -34,7 +34,7 @@ const Login = () => {
   }
 
   // 提交
-  let onFinish = async () => {
+  const onFinish = async () => {
     const values = form.getFieldsValue()
     // 校验
     if (!values.acount) {
@@ -122,11 +122,6 @@ const Login = () => {
     )
   }, [])
 
-  useEffect(() => {
-    return () => {
-      onFinish = () => {}
-    }
-  })
   return (
     <div className={styles.login_page}>
       <Form className={styles.form_box} form={form} layout='horizontal'
