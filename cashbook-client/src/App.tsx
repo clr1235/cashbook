@@ -6,6 +6,7 @@ import {
 } from "react-router-dom"
 import routes from './router'
 import CustomTabBar from './components/customTabBar'
+import Header from './components/Header'
 
 import styles from './App.module.less'
 
@@ -19,6 +20,9 @@ function App() {
   }, [pathname])
   return (
     <div className={styles.app}>
+      {
+        showTabBar ? <Header/> : null
+      }
       <div className={styles.body}>
         <Switch>
           {
