@@ -8,7 +8,7 @@ export default (appInfo: EggAppInfo) => {
   config.keys = appInfo.name + '_1632303620644_1616';
 
   // add your egg config in here
-  config.middleware = [];
+  config.middleware = [ ];
   // 安全配置
   config.security = {
     csrf: {
@@ -44,7 +44,7 @@ export default (appInfo: EggAppInfo) => {
   };
   // 定义token加密条件字符串
   config.jwt = {
-    secret: 'abc',
+    secret: 'henji',
   };
   // 文件上传模式
   config.multipart = {

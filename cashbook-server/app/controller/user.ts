@@ -80,6 +80,7 @@ export default class UserController extends Controller {
       username: userInfo.username,
       exp: Math.floor(Date.now() / 1000) + (24 * 60 * 60), // token 有效期为 24 小时
     }, app.config.jwt.secret);
+
     ctx.body = {
       code: 200,
       msg: '登录成功',

@@ -32,6 +32,10 @@ function getBaseURL(env: envType) {
   return baseMap[env];
 }
 
+// 配置全局的axios默认值
+axios.defaults.headers.common['Authorization'] = `${localStorage.getItem('token') || null}`
+axios.defaults.headers.post['Content-Type'] = 'application/json'
+
 // 创建axios的实例
 function axiosHttp(axiosConfig: any) {
   const service = axios.create({
@@ -40,14 +44,13 @@ function axiosHttp(axiosConfig: any) {
     withCredentials: true,
     headers: {
       'X-Requested-With': 'XMLHttpRequest',
-      'Authorization': `${localStorage.getItem('token') || null}`,
-      'Content-Type': 'application/json'
     },
     ...axiosConfig,
   });
   // 添加请求拦截器
   service.interceptors.request.use(
     function (config) {
+      console.log(localStorage.getItem('authorization'), 'BBB=-=-=-=-=AAA');
       // 在发送请求之前做些什么
       Toast.show({
         content: "正在加载...",

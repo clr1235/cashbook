@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Input, Button, Tabs, Form, Toast } from 'antd-mobile'
 import Captcha from 'react-captcha-code';
 import {useHistory} from 'react-router-dom'
@@ -64,31 +64,43 @@ const Login = () => {
     setLoading(true)
     // 接口调用
     if (state.mode === 'register') {
-      const fetchData = {
-        username: values.acount,
-        password: values.password
-      }
-      try {
-        const res:any = await Api.LoginPageApi.register(fetchData)
-        Toast.show({content: res.msg})
-      } finally {
-        setLoading(false)
-      }
-
+      register(values)
     } else if (state.mode === 'login') {
-      const fetchData = {
-        username: values.acount,
-        password: values.password
-      }
-      try {
-        const res:any = await Api.LoginPageApi.login(fetchData)
-        console.log(res, 'res0-0-0-')
+      login(values)
+    }
+  }
+
+
+  // 登录
+  const login = async (values: any) => {
+    const fetchData = {
+      username: values.acount,
+      password: values.password
+    }
+    try {
+      const res:any = await Api.LoginPageApi.login(fetchData)
+      if (res.code === 200) {
+        localStorage.setItem('token', res?.data?.token);
         Toast.show({content: res.msg})
         history.push('/amount')
-        console.log(33333)
-      } finally {
-        setLoading(false)
       }
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  // 注册
+  const register = async (values: any) => {
+    const fetchData = {
+      username: values.acount,
+      password: values.password
+    }
+    try {
+      const res:any = await Api.LoginPageApi.register(fetchData)
+      Toast.show({content: res.msg})
+      onChangeMode('login')
+    } finally {
+      setLoading(false)
     }
   }
 

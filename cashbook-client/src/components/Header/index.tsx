@@ -59,8 +59,9 @@ const Header = () => {
               setDateValue(value)
             }}
             value={dateValue}
+            precision={'month'}
           >
-            {value => dayjs(value).format('YYYY-MM-DD') }
+            {value => dayjs(value).format('YYYY-MM') }
           </DatePicker>
         </div>
       </div>
