@@ -67,7 +67,7 @@ function Amount(props: any) {
                       </span>
                       <span className={styles.number}>
                         {
-                          item.pay_type === 2 ? `¥ -${it.amount}` : `¥ ${it.amount}`
+                          it.pay_type === 2 ? `¥ -${it.amount}` : `¥ ${it.amount}`
                         }
                       </span>
                     </div>
