@@ -7,11 +7,13 @@ import {consumeTypes} from '../../model'
 const basicColumns = [consumeTypes]
 const now = new Date()
 
-const Header = () => {
+const Header = (props: any) => {
   const [visible, setVisible] = useState(false)
   const [datevisible, setDateVisible] = useState(false)
-  const [value, setValue] = useState<(string | null)[]>([''])
-  const [dateValue, setDateValue] = useState(now)
+  const [filters, setFilters] = useState({
+    type: [''],
+    date: now
+  })
 
   return (
     <div className={styles.header}>
@@ -30,9 +32,12 @@ const Header = () => {
             onClose={() => {
               setVisible(false)
             }}
-            value={value}
+            value={filters.type}
             onConfirm={(val) => {
-              setValue(val)
+              setFilters({
+                ...filters,
+                type: val as any
+              })
               console.log('onConfirm', val)
             }}
             onSelect={val => {
@@ -54,11 +59,15 @@ const Header = () => {
             visible={datevisible}
             onClose={() => {
               setDateVisible(false)
+              props.getFilters(filters)
             }}
             onConfirm={(value) => {
-              setDateValue(value)
+              setFilters({
+                ...filters,
+                date: value as any
+              })
             }}
-            value={dateValue}
+            value={filters.date}
             precision={'month'}
           >
             {value => dayjs(value).format('YYYY-MM') }

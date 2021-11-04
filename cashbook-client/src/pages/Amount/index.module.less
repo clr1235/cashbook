@@ -5,7 +5,9 @@
     justify-content: space-between;
     align-items: center;
     flex-wrap: nowrap;
-    margin-bottom: 20px;
+    margin: -16px -16px 20px;
+    padding: 16px;
+    background-color: #eee;
     .date {
       flex-basis: 140px;
       font-size: 24px;
@@ -29,6 +31,36 @@
           }
         }
       }
+    }
+  }
+  .content {
+    padding: 10px 0;
+    & + .content {
+      border-top: 1px solid #eee;
+    }
+    .detailed {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: nowrap;
+      margin-bottom: 10px;
+      .icon_box {
+        display: flex;
+        align-items: center;
+      }
+      :global {
+        .iconfont {
+          font-size: 24px;
+          color: #a062d4;
+          margin-right: 10px;
+        }
+      }
+      .number {
+        color: #13c2c2;
+      }
+    }
+    .time {
+      margin-bottom: 10px;
     }
   }
 }

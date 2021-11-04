@@ -1,5 +1,6 @@
 import { Service } from 'egg';
 import dayjs from 'dayjs';
+import uuid from 'uuid';
 export default class Bill extends Service {
   // 新建账单
   public async add(params) {
@@ -29,16 +30,58 @@ export default class Bill extends Service {
       //   limit: +params.page_size, // 返回数据量
       //   offset: params.page - 1, // 数据偏移量
       // });
+      console.log(params, 'params-=-=-AAAAA');
       let sql = `select * from bill where user_id = ${params.user_id} and is_delete = 0`;
       if (params.date) {
         const start = dayjs(params.date).format('YYYY-MM-DD');
         const end = dayjs(params.date).add(1, 'month').format('YYYY-MM-DD');
-        sql += ` and date>=${start} and date<${end}`;
+        console.log(start, '--=->>>', end);
+        sql += ` and date>='${start}' and date<'${end}'`;
       }
       const result = await app.mysql.query(`${sql} ORDER BY date DESC limit ${+params.page_size} offset ${params.page - 1};`);
+      // 处理成前端需要的数据结构
+      const detail = {};
+      result.forEach((item: any) => {
+        const dateTmp = dayjs(item.date).format('YYYY-MM-DD HH:mm:ss');
+        const date = dateTmp?.split(' ')[0];
+        const obj = {
+          id: item.id,
+          amount: item.amount,
+          date,
+          time: dateTmp?.split(' ')[1],
+          pay_type: item.pay_type,
+          remark: item.remark,
+          type_id: item.type_id,
+          type_name: item.type_name,
+        };
+        if (!detail[date]) {
+          detail[date] = {
+            id: uuid(),
+            income: 0,
+            pay: 0,
+            date,
+            children: [],
+          };
+        }
+        detail[date].children.push(obj);
+        detail[date].income = detail[date].children.reduce((prev, cur) => {
+          if (cur.pay_type === 1) {
+            // eslint-disable-next-line no-return-assign
+            return prev += cur.amount;
+          }
+          return prev;
+        }, 0);
+        detail[date].pay = detail[date].children.reduce((prev, cur) => {
+          if (cur.pay_type === 2) {
+            // eslint-disable-next-line no-return-assign
+            return prev += cur.amount;
+          }
+          return prev;
+        }, 0);
+      });
       return {
         total: result1.length,
-        list: result,
+        list: Object.values(detail) as any,
       };
     } catch (error) {
       console.log(error);
