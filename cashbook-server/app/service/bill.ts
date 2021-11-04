@@ -1,5 +1,5 @@
 import { Service } from 'egg';
-
+import dayjs from 'dayjs';
 export default class Bill extends Service {
   // 新建账单
   public async add(params) {
@@ -22,13 +22,20 @@ export default class Bill extends Service {
         columns: [ 'id' ], // 要查询的表字段
       });
       const result1 = JSON.parse(JSON.stringify(res));
-      const result = await app.mysql.select('bill', { // 搜索bill表
-        where: { user_id: params.user_id, is_delete: 0 }, // where条件
-        columns: [ 'id', 'pay_type', 'amount', 'date', 'type_id', 'type_name', 'remark' ], // 要查询的表字段
-        orders: [[ 'date', 'desc' ]], // 排序方式
-        limit: +params.page_size, // 返回数据量
-        offset: params.page - 1, // 数据偏移量
-      });
+      // const result = await app.mysql.select('bill', { // 搜索bill表
+      //   where: { user_id: params.user_id, is_delete: 0 }, // where条件
+      //   columns: [ 'id', 'pay_type', 'amount', 'date', 'type_id', 'type_name', 'remark' ], // 要查询的表字段
+      //   orders: [[ 'date', 'desc' ]], // 排序方式
+      //   limit: +params.page_size, // 返回数据量
+      //   offset: params.page - 1, // 数据偏移量
+      // });
+      let sql = `SELECT * from bill WHERE user_id = ${params.user_id} and is_delete = 0`;
+      if (params.date) {
+        const start = dayjs(params.date).format('YYYY-MM-DD');
+        const end = dayjs(params.date).add(1, 'month').format('YYYY-MM-DD');
+        sql += ` and date>=${start} and date<${end}`;
+      }
+      const result = await app.mysql.query(`${sql} limit ${+params.page_size} offset ${params.page - 1}  ORDER BY date DESC;`);
       return {
         total: result1.length,
         list: result,

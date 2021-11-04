@@ -50,7 +50,6 @@ function axiosHttp(axiosConfig: any) {
   // 添加请求拦截器
   service.interceptors.request.use(
     function (config) {
-      console.log(localStorage.getItem('authorization'), 'BBB=-=-=-=-=AAA');
       // 在发送请求之前做些什么
       Toast.show({
         content: "正在加载...",
