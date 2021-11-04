@@ -16,6 +16,7 @@ function Amount() {
     }
     const getBillList = async () => {
       const res = await Api.AmountPageApi.getBillList(fetchData)
+      console.log(res, 'res-=-=');
       !isUnmount && setData(res.data as any)
     }
     getBillList()
@@ -28,7 +29,14 @@ function Amount() {
       <div className={styles.title_box}>
         <span className={styles.date}>2021-12-12</span>
         <div className={styles.right}>
-
+          <div className={styles.cost}>
+            <i className="iconfont icon-zhichu"></i>
+            <span>¥25.00</span>
+          </div>
+          <div className={styles.cost}>
+            <i className="iconfont icon-shouru"></i>
+            <span>¥25.00</span>
+          </div>
         </div>
       </div>
     )

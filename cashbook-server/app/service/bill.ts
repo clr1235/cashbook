@@ -29,13 +29,13 @@ export default class Bill extends Service {
       //   limit: +params.page_size, // 返回数据量
       //   offset: params.page - 1, // 数据偏移量
       // });
-      let sql = `SELECT * from bill WHERE user_id = ${params.user_id} and is_delete = 0`;
+      let sql = `select * from bill where user_id = ${params.user_id} and is_delete = 0`;
       if (params.date) {
         const start = dayjs(params.date).format('YYYY-MM-DD');
         const end = dayjs(params.date).add(1, 'month').format('YYYY-MM-DD');
         sql += ` and date>=${start} and date<${end}`;
       }
-      const result = await app.mysql.query(`${sql} limit ${+params.page_size} offset ${params.page - 1}  ORDER BY date DESC;`);
+      const result = await app.mysql.query(`${sql} ORDER BY date DESC limit ${+params.page_size} offset ${params.page - 1};`);
       return {
         total: result1.length,
         list: result,

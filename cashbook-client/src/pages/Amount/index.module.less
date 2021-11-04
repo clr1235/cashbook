@@ -5,11 +5,30 @@
     justify-content: space-between;
     align-items: center;
     flex-wrap: nowrap;
+    margin-bottom: 20px;
     .date {
-      flex-basis: 100px;
+      flex-basis: 140px;
+      font-size: 24px;
+      font-weight: 500;
+      color: #333;
     }
     .right {
       flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      .cost {
+        &:last-of-type {
+          margin-left: 20px;
+        }
+        :global {
+          .iconfont {
+            font-size: 24px;
+            margin-right: 4px;
+            color: #a062d4;
+          }
+        }
+      }
     }
   }
 }
